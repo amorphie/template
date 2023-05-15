@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\amorphie.template.worker.props" />
+</Project>

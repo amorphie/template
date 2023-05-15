@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "7mh5sc8w/p/HVfPFoooFExPzJuZQhJUayG6taE8CtxY=",
+  "Source": "amorphie.template.worker",
+  "BasePath": "_content/amorphie.template.worker",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
