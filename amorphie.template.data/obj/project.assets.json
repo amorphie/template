@@ -1503,11 +1503,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projects\\Burgan\\amorphie\\contract\\amorphie.template.data\\amorphie.template.data.csproj",
+      "projectUniqueName": "C:\\Projects\\Burgan\\amorphie\\template\\amorphie.template.data\\amorphie.template.data.csproj",
       "projectName": "amorphie.template.data",
-      "projectPath": "C:\\Projects\\Burgan\\amorphie\\contract\\amorphie.template.data\\amorphie.template.data.csproj",
+      "projectPath": "C:\\Projects\\Burgan\\amorphie\\template\\amorphie.template.data\\amorphie.template.data.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Projects\\Burgan\\amorphie\\contract\\amorphie.template.data\\obj\\",
+      "outputPath": "C:\\Projects\\Burgan\\amorphie\\template\\amorphie.template.data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

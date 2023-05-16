@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IXlx64/fbhWAZZR2Oco14RIh62FR+5pkeXdZL9lia4MGUwd86+R8pn/jKxJauVZpxtkgCgaeb8IhnIz5FuGOeg==",
+  "dgSpecHash": "FxDuSdjUoG55QAoM28RpMYezk1C1k1RMENFzl26OsCEBgt+RZgZSHU0vG/jCJwU5E15ofD8lZ48rrXl/b+6F5A==",
   "success": true,
-  "projectFilePath": "c:\\Projects\\Burgan\\amorphie\\contract\\amorphie.template.data\\amorphie.template.data.csproj",
+  "projectFilePath": "C:\\Projects\\Burgan\\amorphie\\template\\amorphie.template.data\\amorphie.template.data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\dapr.aspnetcore\\1.10.0\\dapr.aspnetcore.1.10.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\dapr.client\\1.10.0\\dapr.client.1.10.0.nupkg.sha512",
