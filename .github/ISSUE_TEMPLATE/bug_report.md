@@ -7,10 +7,10 @@ assignees: ''
 
 ---
 
-#### Issue description
+#### Description
 -
 
-#### Steps to reproduce the issue
+#### Steps to reproduce
 
 1.  
 
