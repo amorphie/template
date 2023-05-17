@@ -14,5 +14,5 @@ assignees: ''
 1.
 2.
 
-#### Additional context
-Add any other context or screenshots about the feature request here.
+#### Additional details
+Add any other url, diagram or screenshots about the feature request here.
