@@ -16,11 +16,11 @@
                 "runOn": "folderOpen"
             }
         },
-        {
-            "label": "init-mocks",
-            "type": "shell",
-            "command": "docker run --name amorphie-template-mocks -d -v ${workspaceFolder}/tests/mocks/mocks.json:/data  -p 3000:3000 mockoon/cli:latest -d data -p 3000"
-        },
+    //    {
+    //        "label": "init-mocks",
+    //        "type": "shell",
+    //        "command": "docker run --name amorphie-template-mocks -d -v ${workspaceFolder}/tests/mocks/mocks.json:/data  -p 3000:3000 mockoon/cli:latest -d data -p 3000"
+    //    },
         {
             "label": "stop-mocks",
             "type": "shell",

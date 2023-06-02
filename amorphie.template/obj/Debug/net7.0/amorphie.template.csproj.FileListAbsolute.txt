@@ -53,3 +53,14 @@ C:\Projects\Burgan\amorphie\template\amorphie.template\obj\Debug\net7.0\refint\a
 C:\Projects\Burgan\amorphie\template\amorphie.template\obj\Debug\net7.0\amorphie.template.pdb
 C:\Projects\Burgan\amorphie\template\amorphie.template\obj\Debug\net7.0\amorphie.template.genruntimeconfig.cache
 C:\Projects\Burgan\amorphie\template\amorphie.template\obj\Debug\net7.0\ref\amorphie.template.dll
+C:\Projects\Burgan\amorphie\template\amorphie.template\bin\Debug\net7.0\AutoMapper.dll
+C:\Projects\Burgan\amorphie\template\amorphie.template\bin\Debug\net7.0\Humanizer.dll
+C:\Projects\Burgan\amorphie\template\amorphie.template\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Projects\Burgan\amorphie\template\amorphie.template\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Projects\Burgan\amorphie\template\amorphie.template\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Projects\Burgan\amorphie\template\amorphie.template\bin\Debug\net7.0\System.CodeDom.dll
+C:\Projects\Burgan\amorphie\template\amorphie.template\bin\Debug\net7.0\VaultSharp.dll
+C:\Projects\Burgan\amorphie\template\amorphie.template\bin\Debug\net7.0\amorphie.template.core.dll
+C:\Projects\Burgan\amorphie\template\amorphie.template\bin\Debug\net7.0\amorphie.template.data.dll
+C:\Projects\Burgan\amorphie\template\amorphie.template\bin\Debug\net7.0\amorphie.template.data.pdb
+C:\Projects\Burgan\amorphie\template\amorphie.template\bin\Debug\net7.0\amorphie.template.core.pdb

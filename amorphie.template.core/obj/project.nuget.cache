@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rQlS+KMeKPXdjSAvyVkrffTnPiPFpLowpjq1KZyL6/UfzljYlQVisXagtZ2iA/QCn1vIEIpjZfc+UAZwyaXN+A==",
+  "dgSpecHash": "NaTvLkuKkLDK552Uk4sTUI4GkIcUSC0EsWx6MEDbNAP2pm/WwbFSjEXx2dt6+OQ1tRL9QookmeMZY4Bz7V9aTg==",
   "success": true,
-  "projectFilePath": "c:\\Projects\\Burgan\\amorphie\\contract\\amorphie.template.core\\amorphie.template.core.csproj",
+  "projectFilePath": "C:\\Projects\\Burgan\\amorphie\\template\\amorphie.template.core\\amorphie.template.core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\amorphie.core\\1.0.1\\amorphie.core.1.0.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
