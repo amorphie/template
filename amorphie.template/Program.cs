@@ -18,8 +18,9 @@ var app = builder.Build();
 using var scope = app.Services.CreateScope();
 var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
 
-DbInitializer.Initialize(db);
 db.Database.Migrate();
+DbInitializer.Initialize(db);
+
 
 
 
