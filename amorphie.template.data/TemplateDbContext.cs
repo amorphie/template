@@ -9,20 +9,19 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
 namespace amorphie.template.data;
+
 class TemplateDbContextFactory : IDesignTimeDbContextFactory<TemplateDbContext>
 {
-
     //lazy loading true
     //lazy loading false, eğer alt bileşenleri getirmek istiyorsak include kullanmamız lazım,eager loading
     private readonly IConfiguration _configuration;
-    public TemplateDbContextFactory()
-    {
-    }
+
+    public TemplateDbContextFactory() { }
+
     public TemplateDbContextFactory(IConfiguration configuration)
     {
         _configuration = configuration;
     }
-
 
     public TemplateDbContext CreateDbContext(string[] args)
     {
@@ -37,15 +36,13 @@ class TemplateDbContextFactory : IDesignTimeDbContextFactory<TemplateDbContext>
         return new TemplateDbContext(builder.Options);
     }
 }
-    public class TemplateDbContext : DbContext
-    {
-    
-        public TemplateDbContext(DbContextOptions<TemplateDbContext> options) : base(options)
-        {
-        }
-        
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Enrollment> Enrollments { get; set; }
-        public DbSet<Course> Courses { get; set; }
 
-    }
+public class TemplateDbContext : DbContext
+{
+    public TemplateDbContext(DbContextOptions<TemplateDbContext> options)
+        : base(options) { }
+
+    public DbSet<Student> Students { get; set; }
+    public DbSet<Enrollment> Enrollments { get; set; }
+    public DbSet<Course> Courses { get; set; }
+}

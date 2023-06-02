@@ -55,19 +55,19 @@
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[7.0.5, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[7.0.5, )"
             },
             "Microsoft.EntityFrameworkCore.Proxies": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[7.0.5, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[7.0.4, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -75,7 +75,7 @@
             },
             "amorphie.core": {
               "target": "Package",
-              "version": "[1.0.1, )"
+              "version": "[1.0.6, )"
             },
             "amorphie.core.security": {
               "target": "Package",

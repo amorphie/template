@@ -159,7 +159,7 @@ services:
     command:
       - "--config.file=/etc/prometheus.yml"
     volumes:
-      - ./prometheus/:/etc
+      - ./prometheus:/etc
     ports:
       - "9090:9090"
     networks:
@@ -193,5 +193,10 @@ networks:
 
 volumes:
   redis:
-  postgres:
   redisinsight:
+  postgres:
+  pgadmin:
+  dapr:
+  grafana-data:
+  prometheus:
+
