@@ -1,5 +1,9 @@
+using amorphie.core.Extension;
 using amorphie.template.data;
+using amorphie.template.Validator;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.Replication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddValidatorsFromAssemblyContaining<StudentValidator>(includeInternalTypes: true);
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+
 builder.Services.AddDbContext<TemplateDbContext>
+    // (options => options.UseInMemoryDatabase("TemplateDbContext"));
     (options => options.UseNpgsql("Host=localhost:5432;Database=TemplateDb;Username=postgres;Password=postgres", b => b.MigrationsAssembly("amorphie.template.data")));
 
 
@@ -22,9 +32,6 @@ db.Database.Migrate();
 DbInitializer.Initialize(db);
 
 
-
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -34,7 +41,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
+app.AddRoutes();
 
 app.Run();
 
