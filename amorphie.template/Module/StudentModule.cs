@@ -27,6 +27,12 @@ public class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDbContext
         base.AddRoutes(routeGroupBuilder);
 
         routeGroupBuilder.MapGet("/search", SearchMethod);
+
+        routeGroupBuilder.MapGet("/custom-method", CustomMethod);
+    }
+    protected async ValueTask<IResult> CustomMethod()
+    {
+        return Results.Ok();
     }
 
     protected async  ValueTask<IResult> SearchMethod(
