@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,7 +41,7 @@ app.UseSwaggerUI();
 
 
 
-
+app.MapMetrics();
 
 app.Run();
 

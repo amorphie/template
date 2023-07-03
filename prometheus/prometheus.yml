@@ -9,9 +9,6 @@ scrape_configs:
       - targets:
           [
             "host.docker.internal:4200",
-            "host.docker.internal:42010",
             "host.docker.internal:4201",
-            "host.docker.internal:42020",
             "host.docker.internal:4202",
-            "host.docker.internal:42030"
           ]
