@@ -4,6 +4,7 @@ using amorphie.template.Validator;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.Replication;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.AddRoutes();
+
+app.MapMetrics();
 
 app.Run();
 

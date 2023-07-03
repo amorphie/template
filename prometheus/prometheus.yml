@@ -8,8 +8,10 @@ scrape_configs:
     static_configs:
       - targets:
           [
-            "host.docker.internal:41012",
-            "host.docker.internal:41022",
-            "host.docker.internal:4101",
-            "host.docker.internal:4102",
+            "host.docker.internal:4200",
+            "host.docker.internal:42010",
+            "host.docker.internal:4201",
+            "host.docker.internal:42020",
+            "host.docker.internal:4202",
+            "host.docker.internal:42030"
           ]
