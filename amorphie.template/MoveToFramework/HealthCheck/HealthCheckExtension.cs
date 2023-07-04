@@ -18,7 +18,7 @@ namespace amorphie.template.HealthCheck
 
             var daprMetadata = GetDaprMetadata(daprClient);
             if (daprMetadata != null && daprMetadata.Components.Any())
-                RegisterHealthChecks2(builder, daprMetadata.Components, daprClient);
+                RegisterHealthChecks(builder, daprMetadata.Components, daprClient);
         }
 
         private static DaprMetadata GetDaprMetadata(DaprClient daprClient)
@@ -26,7 +26,7 @@ namespace amorphie.template.HealthCheck
             return daprClient.GetMetadataAsync(default).GetAwaiter().GetResult();
         }
 
-        private static void RegisterHealthChecks2(
+        private static void RegisterHealthChecks(
             IHealthChecksBuilder healthChecksBuilder,
             IReadOnlyList<DaprComponentsMetadata> components,
             DaprClient daprClient
