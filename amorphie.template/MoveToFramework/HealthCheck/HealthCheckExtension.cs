@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using amorphie.core.HealthCheck;
-using amorphie.core.HealthCheck.Options;
 using Dapr.Client;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
