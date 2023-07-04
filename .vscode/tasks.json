@@ -2,31 +2,6 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "update-database",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "ef",
-                "database",
-                "update",
-                "--project", "${workspaceFolder}/amorphie.template.data/amorphie.template.data.csproj"
-            ],
-            "problemMatcher": "$tsc",
-            "runOptions": {
-                "runOn": "folderOpen"
-            }
-        },
-        {
-            "label": "init-mocks",
-            "type": "shell",
-            "command": "docker run --name amorphie-template-mocks -d -v ${workspaceFolder}/tests/mocks/mocks.json:/data  -p 3010:3000 mockoon/cli:latest -d data -p 3000"
-        },
-        {
-            "label": "stop-mocks",
-            "type": "shell",
-            "command": "docker rm -f amorphie-template-mocks"
-        },
-        {
             "label": "build-amorphie-template",
             "dependsOn": "init-mocks",
             "command": "dotnet",
