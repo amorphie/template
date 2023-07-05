@@ -30,12 +30,20 @@ public class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDbContext
 
         routeGroupBuilder.MapGet("/custom-method", CustomMethod);
     }
+
+    protected override async void Upsert(RouteGroupBuilder routeGroupBuilder) { 
+
+            routeGroupBuilder.MapPost("/", ()=>{
+
+            })   .Produces<string>(StatusCodes.Status200OK);
+    }
+
     protected async ValueTask<IResult> CustomMethod()
     {
         return Results.Ok();
     }
 
-    protected async  ValueTask<IResult> SearchMethod(
+    protected async ValueTask<IResult> SearchMethod(
         [FromServices] TemplateDbContext context,
         [FromServices] IMapper mapper,
         [AsParameters] StudentSearch userSearch
@@ -44,7 +52,11 @@ public class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDbContext
         IList<Student> resultList = await context
             .Set<Student>()
             .AsNoTracking()
-            .Where(x=>x.FirstMidName.Contains(userSearch.Keyword!) || x.LastName.Contains(userSearch.Keyword!))
+            .Where(
+                x =>
+                    x.FirstMidName.Contains(userSearch.Keyword!)
+                    || x.LastName.Contains(userSearch.Keyword!)
+            )
             .Skip(userSearch.Page)
             .Take(userSearch.PageSize)
             .ToListAsync();
