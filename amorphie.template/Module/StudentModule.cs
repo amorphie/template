@@ -31,11 +31,9 @@ public class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDbContext
         routeGroupBuilder.MapGet("/custom-method", CustomMethod);
     }
 
-    protected override async void Upsert(RouteGroupBuilder routeGroupBuilder) { 
-
-            routeGroupBuilder.MapPost("/", ()=>{
-
-            })   .Produces<string>(StatusCodes.Status200OK);
+    protected override async void Upsert(RouteGroupBuilder routeGroupBuilder)
+    {
+        routeGroupBuilder.MapPost("/", () => { }).Produces<string>(StatusCodes.Status200OK);
     }
 
     protected async ValueTask<IResult> CustomMethod()
@@ -46,7 +44,9 @@ public class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDbContext
     protected async ValueTask<IResult> SearchMethod(
         [FromServices] TemplateDbContext context,
         [FromServices] IMapper mapper,
-        [AsParameters] StudentSearch userSearch
+        [AsParameters] StudentSearch userSearch,
+        HttpContext httpContext,
+        CancellationToken token
     )
     {
         IList<Student> resultList = await context
@@ -59,7 +59,7 @@ public class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDbContext
             )
             .Skip(userSearch.Page)
             .Take(userSearch.PageSize)
-            .ToListAsync();
+            .ToListAsync(token);
 
         return (resultList != null && resultList.Count > 0)
             ? Results.Ok(mapper.Map<IList<StudentDTO>>(resultList))
