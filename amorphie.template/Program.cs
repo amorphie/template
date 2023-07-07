@@ -1,5 +1,6 @@
 using amorphie.core.Extension;
 using amorphie.core.HealthCheck;
+using amorphie.core.Swagger;
 using amorphie.template.data;
 using amorphie.template.HealthCheck;
 using amorphie.template.Validator;
@@ -18,7 +19,10 @@ builder.Services.AddHealthChecks().AddBBTHealthCheck();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddSwaggerGen(options=>
+{
+    options.OperationFilter<AddSwaggerParameterFilter>();
+});
 
 builder.Services.AddValidatorsFromAssemblyContaining<StudentValidator>(includeInternalTypes: true);
 builder.Services.AddAutoMapper(typeof(Program).Assembly);

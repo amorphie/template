@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using amorphie.template.core.Search;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using amorphie.core.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace amorphie.template.Module;
 
@@ -36,6 +38,7 @@ public class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDbContext
         routeGroupBuilder.MapPost("/", () => { }).Produces<string>(StatusCodes.Status200OK);
     }
 
+    [AddSwaggerParameter("Test Required", ParameterLocation.Header, true)]
     protected async ValueTask<IResult> CustomMethod()
     {
         return Results.Ok();
