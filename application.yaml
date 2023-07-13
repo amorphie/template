@@ -91,7 +91,7 @@ zeebe:
         className: io.zeebe.redis.exporter.RedisExporter
         jarPath: exporters/zeebe-redis-exporter-jar-with-dependencies.jar
         args:
-                remoteAddress: redis://redis:6379
+                remoteAddress: redis://bbt-template-redis:6379
                 # Redis Stream prefix
                 name: "zeebe"
                 # record serialization format: [protobuf|json]
@@ -101,7 +101,7 @@ zeebe:
         className: io.camunda.zeebe.exporter.ElasticsearchExporter
 
         args:
-          url: http://elasticsearch:9200
+          url: http://bbt-template-elastic:9200
 
           bulk:
             delay: 5

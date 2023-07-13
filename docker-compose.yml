@@ -2,7 +2,7 @@ version: "3.9"
 services:
 
   redis:
-    container_name: bbt-redis
+    container_name: bbt-template-redis
     image: redis:latest
     restart: always
     ports:
@@ -14,7 +14,7 @@ services:
       - bbt-development
 
   redisinsight:
-    container_name: bbt-red-insight
+    container_name: bbt-template-red-insight
     image: redislabs/redisinsight:latest
     ports:
       - '5501:8001'
@@ -25,15 +25,18 @@ services:
       - bbt-development
       
   zeebe:
-    container_name: bbt_zeebe
-    image: camunda/zeebe:8.1.8
+    container_name: bbt-template-zeebe
+    image: camunda/zeebe:latest
     environment:
       - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_CLASSNAME=io.camunda.zeebe.exporter.ElasticsearchExporter
-      - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_URL=http://elastic:9200
+      - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_URL=http://bbt-template-elastic:9200
       - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_BULK_SIZE=1
       - ZEEBE_LOG_LEVEL=debug
-      - ZEEBE_REDIS_REMOTE_ADDRESS=redis://redis:6379
+      - ZEEBE_REDIS_REMOTE_ADDRESS=redis://bbt-template-redis:6379
       - ZEEBE_REDIS_TIME_TO_LIVE_IN_SECONDS=900
+    depends_on:
+      - elastic
+      - redis
     ports:
       - "26500:26500"
       - "9600:9600"
@@ -44,15 +47,14 @@ services:
       - bbt-development
 
   operate: 
-    container_name: bbt_zeebe_operate
-    image: camunda/operate:8.1.8
-    platform: linux/amd64
+    container_name: bbt-template-zeebe-operate
+    image: camunda/operate:latest
     ports:
       - "8081:8080"
     environment: 
-      - CAMUNDA_OPERATE_ZEEBE_GATEWAYADDRESS=zeebe:26500
-      - CAMUNDA_OPERATE_ELASTICSEARCH_URL=http://elastic:9200
-      - CAMUNDA_OPERATE_ZEEBEELASTICSEARCH_URL=http://elastic:9200
+      - CAMUNDA_OPERATE_ZEEBE_GATEWAYADDRESS=bbt-template-zeebe:26500
+      - CAMUNDA_OPERATE_ELASTICSEARCH_URL=http://bbt-template-elastic:9200
+      - CAMUNDA_OPERATE_ZEEBEELASTICSEARCH_URL=http://bbt-template-elastic:9200
     networks:
       - bbt-development
     depends_on:
@@ -60,8 +62,8 @@ services:
       - elastic
 
   postgres:
-    container_name: bbt-postgres
-    image: postgres
+    container_name: bbt-template-postgres
+    image: postgres:latest
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -75,8 +77,8 @@ services:
       - bbt-development
 
   pgadmin:
-    container_name: bbt-pgadmin
-    image: dpage/pgadmin4
+    container_name: bbt-template-pgadmin
+    image: dpage/pgadmin4:latest
     environment:
       PGADMIN_DEFAULT_EMAIL: "info@info.com"
       PGADMIN_DEFAULT_PASSWORD: admin
@@ -90,8 +92,8 @@ services:
       - bbt-development
 
   elastic:
-    container_name: bbt_elastic
-    image: elasticsearch:7.17.9
+    container_name: bbt-template-elastic
+    image: elasticsearch:8.8.1
     environment:
       - xpack.security.enabled=false
       - "discovery.type=single-node"
@@ -99,14 +101,12 @@ services:
       - bbt-development
     ports:
       - 9200:9200
-    depends_on:
-      - zeebe
 
   kibana:
-    container_name: bbt_kibana
-    image: docker.elastic.co/kibana/kibana:7.17.9
+    container_name: bbt-template-kibana
+    image: kibana:8.8.1
     environment:
-      - ELASTICSEARCH_HOSTS=http://bbt_elastic:9200
+      - ELASTICSEARCH_HOSTS=http://bbt-template-elastic:9200
     networks:
       - bbt-development
     depends_on:
@@ -115,8 +115,8 @@ services:
       - 5601:5601
 
   vault:
+    container_name: bbt-template-vault
     image: vault:latest
-    container_name: vault
     restart: on-failure:10
     ports:
       - "8200:8200"
@@ -136,7 +136,7 @@ services:
       - bbt-development
 
   vault-prepopulate:
-    image: alpine/curl
+    image: alpine/curl:latest
     depends_on:
       - vault
     volumes:
@@ -146,16 +146,16 @@ services:
        - bbt-development
 
   zipkin:
-    container_name: bbt-zipkin
-    image: "openzipkin/zipkin"
+    container_name: bbt-template-zipkin
+    image: openzipkin/zipkin:latest
     ports:
       - "9411:9411"
     networks:
       - bbt-development
 
   prometheus:
-    container_name: bbt-prometheus
-    image: "prom/prometheus"
+    container_name: bbt-template-prometheus
+    image: prom/prometheus:latest
     command:
       - "--config.file=/etc/prometheus.yml"
     volumes:
@@ -166,8 +166,8 @@ services:
       - bbt-development
 
   grafana:
-    container_name: bbt-grafana
-    image: "grafana/grafana"
+    container_name: bbt-template-grafana
+    image: grafana/grafana:latest
     volumes:
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
       - grafana-data:/var/lib/grafana
@@ -180,7 +180,7 @@ services:
       - prometheus
 
   placement:
-      image: "daprio/dapr:latest"
+      image: daprio/dapr:latest
       command: ["./placement", "-port", "50006", "log-level", "debug", "--log-as-json"]
       ports:
       - "50006:50006"
