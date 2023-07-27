@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  placement:
+    image: daprio/dapr:latest
+    command: ["./placement", "-port", "50006", "log-level", "debug", "--log-as-json"]
+    ports:
+      - "50006:50006"
+    networks:
+      - bbt-development
