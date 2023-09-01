@@ -7,10 +7,10 @@ using amorphie.template.core.Model;
 
 namespace amorphie.template.Validator;
     public sealed class StudentValidator : AbstractValidator<Student>
+{
+    public StudentValidator()
     {
-        public StudentValidator()
-        {
-            RuleFor(x => x.FirstMidName).NotNull();
-            RuleFor(x => x.LastName).MinimumLength(10);
-        }
+        RuleFor(x => x.FirstMidName).NotNull();
+        RuleFor(x => x.LastName).MinimumLength(10);
     }
+}
