@@ -2,14 +2,14 @@ version: "3.9"
 services:
   kafka-connect:
     image: confluentinc/cp-kafka-connect
-    container_name: kafka-connect
+    container_name: bbt-template-kafka-connect
     depends_on:
       - kafka
     ports:
       - "8083:8083"
     environment:
       - CONNECT_BOOTSTRAP_SERVERS=kafka:9092
-      - CONNECT_REST_ADVERTISED_HOST_NAME=kafka-connect
+      - CONNECT_REST_ADVERTISED_HOST_NAME=bbt-template-kafka-connect
       - CONNECT_REST_PORT=8083
       - CONNECT_GROUP_ID=compose-connect-group
       - CONNECT_CONFIG_STORAGE_TOPIC=connect-configs
@@ -23,7 +23,7 @@ services:
       - CONNECT_INTERNAL_KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
       - CONNECT_INTERNAL_VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
     volumes:
-      - ./connect-configs:/etc/kafka/connect
+      - ../connect-configs:/etc/kafka/connect
     command:
       - bash
       - -c

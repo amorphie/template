@@ -17,7 +17,7 @@ services:
       - "26500:26500"
       - "9600:9600"
     volumes:
-      - ./application.yaml:/usr/local/zeebe/config/application.yaml
-      - ./zeebe-exporters/zeebe-redis-exporter-0.9.2-jar-with-dependencie.jar:/usr/local/zeebe/exporters/zeebe-redis-exporter-jar-with-dependencies.jar
+      - ../application.yaml:/usr/local/zeebe/config/application.yaml
+      - ../zeebe-exporters/zeebe-redis-exporter-0.9.2-jar-with-dependencie.jar:/usr/local/zeebe/exporters/zeebe-redis-exporter-jar-with-dependencies.jar
     networks:
       - bbt-development

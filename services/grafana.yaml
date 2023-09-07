@@ -4,7 +4,7 @@ services:
     container_name: bbt-template-grafana
     image: grafana/grafana:latest
     volumes:
-      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ../grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
       - grafana-data:/var/lib/grafana
     
     ports:

@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   kafka-ui:
-    container_name: kafka-ui
+    container_name: bbt-template-kafka-ui
     image: provectuslabs/kafka-ui:latest
     ports:
       - 8080:8080
@@ -10,7 +10,7 @@ services:
       - kafka-connect
     environment:
       KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: bbt-template-kafka:9092
       KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: first
-      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka-connect:8083
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://bbt-template-kafka-connect:8083
       DYNAMIC_CONFIG_ENABLED: 'true'

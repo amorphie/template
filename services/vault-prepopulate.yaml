@@ -5,7 +5,7 @@ services:
     depends_on:
       - vault
     volumes:
-      - ./vault.sh:/usr/local/bin/prepopulate_vault.sh
+      - ../vault.sh:/usr/local/bin/prepopulate_vault.sh
     command: ["sh", "-c", "/usr/local/bin/prepopulate_vault.sh"]
     networks:
       - bbt-development
