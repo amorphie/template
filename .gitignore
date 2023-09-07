@@ -351,3 +351,7 @@ MigrationBackup/
 
 #Adding jetbrains idea folder
 *.idea
+
+# Ignore test results
+tests/collections/newman
+tests/collections/reports
