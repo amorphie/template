@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using amorphie.core.Swagger;
 using Microsoft.OpenApi.Models;
+using amorphie.core.Identity;
 
 namespace amorphie.template.Module;
 
@@ -29,15 +30,12 @@ public class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDbContext
         base.AddRoutes(routeGroupBuilder);
 
         routeGroupBuilder.MapGet("/search", SearchMethod);
-
         routeGroupBuilder.MapGet("/custom-method", CustomMethod);
     }
-
-    protected override async void Upsert(RouteGroupBuilder routeGroupBuilder)
+    protected override ValueTask<IResult> UpsertMethod([FromServices] IMapper mapper, [FromServices] FluentValidation.IValidator<Student> validator, [FromServices] TemplateDbContext context, [FromServices] IBBTIdentity bbtIdentity, [FromBody] StudentDTO data, HttpContext httpContext, CancellationToken token)
     {
-        routeGroupBuilder.MapPost("/", () => { }).Produces<string>(StatusCodes.Status200OK);
+        return base.UpsertMethod(mapper, validator, context, bbtIdentity, data, httpContext, token);
     }
-
     [AddSwaggerParameter("Test Required", ParameterLocation.Header, true)]
     protected async ValueTask<IResult> CustomMethod()
     {

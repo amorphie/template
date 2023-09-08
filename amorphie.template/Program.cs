@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using amorphie.core.Extension;
 using amorphie.core.HealthCheck;
+using amorphie.core.Identity;
 using amorphie.core.Swagger;
 using amorphie.template.data;
 using amorphie.template.HealthCheck;
@@ -27,6 +28,7 @@ builder.Services.Configure<JsonOptions>(options =>
 builder.Services.AddDaprClient();
 builder.Services.AddHealthChecks().AddBBTHealthCheck();
 
+builder.Services.AddScoped<IBBTIdentity, FakeIdentity>();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
