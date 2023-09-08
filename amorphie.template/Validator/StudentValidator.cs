@@ -14,3 +14,9 @@ namespace amorphie.template.Validator;
             RuleFor(x => x.LastName).MinimumLength(10);
         }
     }
+
+public static class HealthCheckModule 
+{
+ 
+}
+

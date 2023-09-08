@@ -16,7 +16,8 @@ using amorphie.core.Identity;
 
 namespace amorphie.template.Module;
 
-public class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDbContext>
+
+public sealed class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDbContext>
 {
     public StudentModule(WebApplication app)
         : base(app) { }

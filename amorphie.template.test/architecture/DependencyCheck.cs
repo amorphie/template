@@ -1,22 +1,19 @@
+using amorphie.core.Module.minimal_api;
 using NetArchTest.Rules;
 
-namespace amorphie.template.test;
+namespace amorphie.template.test.architecture;
 
 public class DependencyCheck
 {
     [Fact]
-    public void DataToCoreCheck()
+    public void CoreDependencyCheck()
     {
-        /*
         var result = Types.InCurrentDomain()
             .That()
             .ResideInNamespace("amorphie.template.core")
-            .Should()
-            .BeSealed()
+            .ShouldNot()
+            .HaveDependencyOn("amorphie.template.data")
             .GetResult()
             .IsSuccessful;
-
-            Assert.True(result);
-            */
     }
 }

@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql.Replication;
 using Prometheus;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 await builder.Configuration.AddVaultSecrets("amorphie-secretstore", new string[] { "amorphie-template" });
 var postgreSql = builder.Configuration["templatedb"];
