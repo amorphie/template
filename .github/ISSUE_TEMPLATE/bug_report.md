@@ -7,18 +7,8 @@ assignees: ''
 
 ---
 
-#### Description
+## Describe the bug
+<!-- A clear and concise description of what the bug is. -->
 
-
-#### Steps to reproduce
-
-1.  
-
-#### What's the expected result?
-
-
-#### What's the actual result?
-
-
-#### Additional details / logs / screenshot
-
+## Platform
+<!-- Platform type ( such as Mobile.Ios, Mobile.Android, Web, Desktop etc)  and version, model information-->
