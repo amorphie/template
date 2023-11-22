@@ -13,12 +13,34 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.Replication;
 using Prometheus;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
+using Elastic.Apm.NetCoreAll;
 
 
 
 var builder = WebApplication.CreateBuilder(args);
-await builder.Configuration.AddVaultSecrets("amorphie-secretstore", new string[] { "amorphie-template" });
-var postgreSql = builder.Configuration["templatedb"];
+
+// Configure Serilog
+var logger = new LoggerConfiguration()
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
+    {
+        AutoRegisterTemplate = true,
+        AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8,
+    })
+    .CreateLogger();
+
+Log.Logger = logger;
+// If needed, Clear default providers
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+builder.Host.UseSerilog(logger);
+
+// await builder.Configuration.AddVaultSecrets("amorphie-secretstore", new string[] { "amorphie-template" });
+// var postgreSql = builder.Configuration["templatedb"];
+var postgreSql = "Host=localhost:5432;Database=TemplateDb;Username=postgres;Password=postgres;Include Error Detail=true;";
 
 // If you use AutoInclude in context you should add  ReferenceHandler.IgnoreCycles to avoid circular load
 builder.Services.Configure<JsonOptions>(options =>
@@ -69,10 +91,13 @@ app.UseHttpsRedirection();
 
 app.AddRoutes();
 
+app.UseAllElasticApm(builder.Configuration);
+
 app.MapHealthChecks("/healthz", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
+
 app.MapMetrics();
 
 app.Run();

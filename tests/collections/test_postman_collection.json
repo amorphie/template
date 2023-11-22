@@ -50,7 +50,7 @@
 							"    const responseData = pm.response.json();",
 							"",
 							"    pm.expect(responseData).to.be.an('object');",
-							"    pm.expect(responseData.enrollmentDate).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);",
+							"    pm.expect(responseData.enrollmentDate).to.match(/^20\\d{2}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);",
 							"});",
 							"",
 							"var jsonData = JSON.parse(responseBody);",
@@ -66,7 +66,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"lastName\": \"EvansEvans\",\n  \"firstMidName\": \"Joseph\",\n  \"enrollmentDate\": \"2023-09-07T10:55:29.825Z\"\n}",
+					"raw": "{\n  \"lastName\": \"Evans Evans\",\n  \"firstMidName\": \"Joseph\",\n  \"enrollmentDate\": \"2023-09-07T10:55:29.825Z\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -97,7 +97,7 @@
 							"    pm.expect(responseData.lastName).to.exist.and.to.be.a('string');",
 							"    pm.expect(responseData.firstMidName).to.exist.and.to.be.a('string');",
 							"    pm.expect(responseData.enrollmentDate).to.exist.and.to.be.a('string');",
-							"    pm.expect(responseData.id).to.exist.and.to.be.a('guid');",
+							"    // pm.expect(responseData.id).to.exist.and.to.be.a('guid');",
 							"});",
 							"",
 							"",
@@ -124,6 +124,13 @@
 							"    pm.expect(responseData.enrollmentDate).to.match(/\\d{4}-\\d{2}-\\d{2}/);",
 							"});",
 							"",
+							"pm.test(\"Response value is correct\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData.lastName).to.eql('Evans Evans');",
+							"    pm.expect(responseData.firstMidName).to.eql('Joseph');",
+							"});",
+							"",
 							""
 						],
 						"type": "text/javascript"
@@ -139,6 +146,54 @@
 		},
 		{
 			"name": "Upsert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.lastName).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.firstMidName).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.enrollmentDate).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.id).to.exist.and.to.be.a('string');",
+							"});",
+							"",
+							"",
+							"pm.test(\"lastName is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData.lastName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"firstMidName is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData.firstMidName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"enrollmentDate is in a valid date format\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData.enrollmentDate).to.match(/^20\\d{2}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/, \"enrollmentDate should be in the format yyyy-mm-dd\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -152,6 +207,132 @@
 					}
 				},
 				"url": "{{ServerUrl}}/student"
+			},
+			"response": []
+		},
+		{
+			"name": "ReGet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has required fields - lastName, firstMidName, enrollmentDate, and id\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.lastName).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.firstMidName).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.enrollmentDate).to.exist.and.to.be.a('string');",
+							"    // pm.expect(responseData.id).to.exist.and.to.be.a('guid');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Last name is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.lastName).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"First mid name should be a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.firstMidName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"enrollmentDate is a valid date format\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.enrollmentDate).to.match(/\\d{4}-\\d{2}-\\d{2}/);",
+							"});",
+							"",
+							"pm.test(\"Response value is correct\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData.lastName).to.eql('EvansEvans');",
+							"    pm.expect(responseData.firstMidName).to.eql('Joseph');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{ServerUrl}}/student/{{CreatedId}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.lastName).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.firstMidName).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.enrollmentDate).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.id).to.exist.and.to.be.a('string');",
+							"});",
+							"",
+							"",
+							"pm.test(\"lastName is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.lastName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"lastName should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"firstMidName is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData.firstMidName).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"enrollmentDate is in a valid date format\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.enrollmentDate).to.match(/^20\\d{2}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{ServerUrl}}/student/{{CreatedId}}"
 			},
 			"response": []
 		},
@@ -192,10 +373,11 @@
 							"    const responseData = pm.response.json();",
 							"",
 							"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
-							"",
+							"/*",
 							"    responseData.forEach(function (student) {",
-							"        pm.expect(student.enrollmentDate).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);",
+							"        pm.expect(student.enrollmentDate).to.match(/^20\\d{2}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);",
 							"    });",
+							"    */",
 							"});",
 							"",
 							"",

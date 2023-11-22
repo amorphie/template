@@ -1,0 +1,5 @@
+{
+    "data": {
+        "templatedb": "Host=localhost:5432;Database=TemplateDb;Username=postgres;Password=postgres;Include Error Detail=true;"
+    }
+}

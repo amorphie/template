@@ -1,3 +1,6 @@
 {
-    "dotnet.defaultSolution": "template.sln"
+    "dotnet.defaultSolution": "template.sln",
+    "projectManager.git.baseFolders": [
+        "~/Documents/Github/"
+    ]
 }
