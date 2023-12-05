@@ -5,6 +5,7 @@ using amorphie.core.Identity;
 using amorphie.core.Swagger;
 using amorphie.template.data;
 using amorphie.template.HealthCheck;
+using amorphie.template.Module;
 using amorphie.template.Swagger;
 using amorphie.template.Validator;
 using Asp.Versioning;
@@ -38,7 +39,7 @@ builder.Services.AddApiVersioning(options =>
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.ApiVersionReader = ApiVersionReader.Combine(
        new HeaderApiVersionReader("X-Api-Version"),
-       new QueryStringApiVersionReader("X-Api-Version"),
+       new QueryStringApiVersionReader("v"),
        new UrlSegmentApiVersionReader());
 }).AddApiExplorer(
     setup =>
@@ -47,10 +48,7 @@ builder.Services.AddApiVersioning(options =>
     setup.SubstituteApiVersionInUrl = true;
 }
 );
-
-
-
-builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerGenOptions>();
+builder.Services.AddSingleton<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerGenOptions>();
 
 
 // ---------------------------------------------
@@ -97,6 +95,7 @@ var db = scope.ServiceProvider.GetRequiredService<TemplateDbContext>();
 db.Database.Migrate();
 DbInitializer.Initialize(db);
 
+app.UseRouting();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -104,14 +103,14 @@ if (app.Environment.IsDevelopment())
     // Enable middleware to serve Swagger UI.
     app.UseSwaggerUI(o =>
 {
-    /*
+
     var versionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
     foreach (var description in versionDescriptionProvider.ApiVersionDescriptions)
     {
         o.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
             $"MyApi - {description.GroupName.ToUpper()}");
     }
-    */
+/*
     var descriptions = app.DescribeApiVersions();
 
     // build a swagger endpoint for each discovered API version
@@ -121,6 +120,7 @@ if (app.Environment.IsDevelopment())
         var name = description.GroupName.ToUpperInvariant();
         o.SwaggerEndpoint(url, name);
     }
+    */
 });
 }
 

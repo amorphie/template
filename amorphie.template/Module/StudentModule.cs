@@ -16,7 +16,13 @@ using amorphie.core.Identity;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Builder;
 using Asp.Versioning.Builder;
-using Google.Protobuf.WellKnownTypes;
+using System.Linq.Expressions;
+using amorphie.core.Zeebe.dapr;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using amorphie.core.Extension;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.OpenApi.Any;
 
 namespace amorphie.template.Module;
 
@@ -87,20 +93,25 @@ public sealed class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDb
         CancellationToken token
     )
     {
-        IList<Student> resultList = await context
-            .Set<Student>()
-            .AsNoTracking()
-            .Where(
-                x =>
-                    x.FirstMidName.Contains(userSearch.Keyword!)
-                    || x.LastName.Contains(userSearch.Keyword!)
-            )
-            .Skip(userSearch.Page)
-            .Take(userSearch.PageSize)
-            .ToListAsync(token);
+        IQueryable<Student> query = await context
+             .Set<Student>()
+             .AsNoTracking()
+             .Where(
+                 x =>
+                     x.FirstMidName.Contains(userSearch.Keyword!)
+                     || x.LastName.Contains(userSearch.Keyword!)
+             )
+             .Sort<Student>("FirstMidName", SortDirectionEnum.Asc);
+             
+
+        IList<Student> resultList = await query
+.Skip(userSearch.Page)
+.Take(userSearch.PageSize)
+.ToListAsync(token);
 
         return (resultList != null && resultList.Count > 0)
             ? Results.Ok(mapper.Map<IList<StudentDTO>>(resultList))
             : Results.NoContent();
     }
+
 }
