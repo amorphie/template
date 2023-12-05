@@ -13,6 +13,16 @@ using AutoMapper;
 using amorphie.core.Swagger;
 using Microsoft.OpenApi.Models;
 using amorphie.core.Identity;
+using Asp.Versioning;
+using Microsoft.AspNetCore.Builder;
+using Asp.Versioning.Builder;
+using System.Linq.Expressions;
+using amorphie.core.Zeebe.dapr;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using amorphie.core.Extension;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.OpenApi.Any;
 
 namespace amorphie.template.Module;
 
@@ -28,10 +38,42 @@ public sealed class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDb
 
     public override void AddRoutes(RouteGroupBuilder routeGroupBuilder)
     {
+
         base.AddRoutes(routeGroupBuilder);
 
         routeGroupBuilder.MapGet("/search", SearchMethod);
         routeGroupBuilder.MapGet("/custom-method", CustomMethod);
+
+
+        #region versioning
+
+        ApiVersionSetBuilder apiVersionSetBuilder = new("Version1");
+        apiVersionSetBuilder.HasApiVersion(new ApiVersion(1, 0));
+        ApiVersionSet apiVersionSet = apiVersionSetBuilder.Build();
+
+
+        routeGroupBuilder.MapGet("/v{version:apiVersion}/hello", () => "Hello from API URL version 1")
+            .WithApiVersionSet(apiVersionSet)
+            .HasApiVersion(new ApiVersion(1, 0));
+        // [AddSwaggerParameterAttribute("X-Api-Version",ParameterLocation.Header,true)] 
+        routeGroupBuilder.MapGet("/hello1", () => "Hello from API URL version 2")
+            .WithApiVersionSet(apiVersionSet)
+            .HasApiVersion(new ApiVersion(2, 0))
+.HasApiVersion(new ApiVersion(1, 0));
+
+
+        #endregion
+        /*
+
+                routeGroupBuilder.MapGet("v{version:apiVersion}/version1", (HttpContext context) =>
+        {
+            var apiVersion = context.GetRequestedApiVersion();
+
+            return "Version " + apiVersion?.MajorVersion?.ToString();
+        })
+            .WithApiVersionSet( new Asp.Versioning.Builder.ApiVersionSetBuilder("Version1") {  new ApiVersion(1, 0) });
+            .HasApiVersion(new ApiVersion(1, 0));
+        */
     }
     protected override ValueTask<IResult> UpsertMethod([FromServices] IMapper mapper, [FromServices] FluentValidation.IValidator<Student> validator, [FromServices] TemplateDbContext context, [FromServices] IBBTIdentity bbtIdentity, [FromBody] StudentDTO data, HttpContext httpContext, CancellationToken token)
     {
@@ -51,20 +93,25 @@ public sealed class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDb
         CancellationToken token
     )
     {
-        IList<Student> resultList = await context
-            .Set<Student>()
-            .AsNoTracking()
-            .Where(
-                x =>
-                    x.FirstMidName.Contains(userSearch.Keyword!)
-                    || x.LastName.Contains(userSearch.Keyword!)
-            )
-            .Skip(userSearch.Page)
-            .Take(userSearch.PageSize)
-            .ToListAsync(token);
+        IQueryable<Student> query = await context
+             .Set<Student>()
+             .AsNoTracking()
+             .Where(
+                 x =>
+                     x.FirstMidName.Contains(userSearch.Keyword!)
+                     || x.LastName.Contains(userSearch.Keyword!)
+             )
+             .Sort<Student>("FirstMidName", SortDirectionEnum.Asc);
+
+
+        IList<Student> resultList = await query
+.Skip(userSearch.Page)
+.Take(userSearch.PageSize)
+.ToListAsync(token);
 
         return (resultList != null && resultList.Count > 0)
             ? Results.Ok(mapper.Map<IList<StudentDTO>>(resultList))
             : Results.NoContent();
     }
+
 }
