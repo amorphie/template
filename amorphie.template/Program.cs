@@ -110,17 +110,17 @@ if (app.Environment.IsDevelopment())
         o.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
             $"MyApi - {description.GroupName.ToUpper()}");
     }
-/*
-    var descriptions = app.DescribeApiVersions();
+    /*
+        var descriptions = app.DescribeApiVersions();
 
-    // build a swagger endpoint for each discovered API version
-    foreach (var description in descriptions)
-    {
-        var url = $"/swagger/{description.GroupName}/swagger.json";
-        var name = description.GroupName.ToUpperInvariant();
-        o.SwaggerEndpoint(url, name);
-    }
-    */
+        // build a swagger endpoint for each discovered API version
+        foreach (var description in descriptions)
+        {
+            var url = $"/swagger/{description.GroupName}/swagger.json";
+            var name = description.GroupName.ToUpperInvariant();
+            o.SwaggerEndpoint(url, name);
+        }
+        */
 });
 }
 

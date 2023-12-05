@@ -49,7 +49,7 @@ public sealed class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDb
 
         ApiVersionSetBuilder apiVersionSetBuilder = new("Version1");
         apiVersionSetBuilder.HasApiVersion(new ApiVersion(1, 0));
-        ApiVersionSet apiVersionSet=  apiVersionSetBuilder.Build();
+        ApiVersionSet apiVersionSet = apiVersionSetBuilder.Build();
 
 
         routeGroupBuilder.MapGet("/v{version:apiVersion}/hello", () => "Hello from API URL version 1")
@@ -102,7 +102,7 @@ public sealed class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDb
                      || x.LastName.Contains(userSearch.Keyword!)
              )
              .Sort<Student>("FirstMidName", SortDirectionEnum.Asc);
-             
+
 
         IList<Student> resultList = await query
 .Skip(userSearch.Page)
