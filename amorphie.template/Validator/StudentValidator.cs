@@ -7,16 +7,16 @@ using amorphie.template.core.Model;
 
 namespace amorphie.template.Validator;
     public sealed class StudentValidator : AbstractValidator<Student>
-    {
-        public StudentValidator()
-        {
-            RuleFor(x => x.FirstMidName).NotNull();
-            RuleFor(x => x.LastName).MinimumLength(10);
-        }
-    }
-
-public static class HealthCheckModule 
 {
- 
+    public StudentValidator()
+    {
+        RuleFor(x => x.FirstMidName).NotNull();
+        RuleFor(x => x.LastName).MinimumLength(10);
+    }
+}
+
+public static class HealthCheckModule
+{
+
 }
 
