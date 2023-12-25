@@ -58,15 +58,9 @@ spec:
   steps:
     - id: fetch-base
       name: Fetch Base
-      action: fetch:template
+      action: fetch:plain
       input:
         url: ./
-        copyWithoutRender:
-          - .deepsource.toml
-          - .github
-        values:
-          name: ${{ parameters.name }}
-          owner: ${{ parameters.owner }}
     - id: delete-files
       name: Delete files
       action: fs:delete
