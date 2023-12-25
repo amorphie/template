@@ -45,6 +45,8 @@ spec:
           type: string
           ui:field: RepoUrlPicker
           ui:options:
+            allowedHosts:
+              - *
             allowedOrganizations: 
               - DefaultCollection
             allowedProjects: ${{ parameters.projectName }}
