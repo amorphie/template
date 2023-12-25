@@ -28,7 +28,7 @@ spec:
           type: string
           description: Owner of the component
           ui:field: OwnerPicker
-    - projectName: TFS Project Name 
+    - title: TFS Project Name 
       required:
         - projectName
       properties:
