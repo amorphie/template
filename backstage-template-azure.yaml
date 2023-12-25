@@ -16,6 +16,7 @@ spec:
       required:
         - name
         - projectName
+        - tfsHost
       properties:
         name:
           title: Name
