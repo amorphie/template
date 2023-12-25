@@ -28,10 +28,6 @@ spec:
           type: string
           description: Owner of the component
           ui:field: OwnerPicker
-          ui:options:
-            catalogFilter:
-              - kind: Group
-                spec.profile.email: entegrasyon@burgan.com.tr
     - title: Choose a location
       required:
         - repoUrl
