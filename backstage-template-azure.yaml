@@ -37,6 +37,8 @@ spec:
           type: string
           ui:field: RepoUrlPicker
           ui:options:
+            allowedOrganizations: 
+              - DefaultCollection
     - title: Authentication Token for target repo
       required:
         - token
