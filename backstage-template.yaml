@@ -28,6 +28,8 @@ spec:
           type: string
           description: Owner of the component
           ui:field: OwnerPicker
+            catalogFilter:
+            kind: Group
     - title: Choose a location
       required:
         - repoUrl
