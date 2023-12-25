@@ -68,6 +68,7 @@ spec:
         files:
           - .deepsource.toml
           - .github
+          - backstage-template.yaml
     - id: publish
       name: Publish
       action: publish:github
