@@ -15,6 +15,7 @@ spec:
     - title: Fill in some steps
       required:
         - name
+        - projectName
       properties:
         name:
           title: Name
@@ -28,12 +29,8 @@ spec:
           type: string
           description: Owner of the component
           ui:field: OwnerPicker
-    - title: TFS Project Name 
-      required:
-        - projectName
-      properties:
         projectName:
-          title: TFS Project Name
+          title: projectName
           type: string
           description: name of the TFS Project Name
           ui:autofocus: true
@@ -50,6 +47,8 @@ spec:
           ui:options:
             allowedOrganizations: 
               - DefaultCollection
+            allowedProjects: ${{ parameters.projectName }}
+            
     - title: Authentication Token for target repo
       required:
         - token
