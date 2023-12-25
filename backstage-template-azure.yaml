@@ -28,6 +28,17 @@ spec:
           type: string
           description: Owner of the component
           ui:field: OwnerPicker
+    - projectName: TFS Project Name 
+      required:
+        - projectName
+      properties:
+        projectName:
+          title: TFS Project Name
+          type: string
+          description: name of the TFS Project Name
+          ui:autofocus: true
+          ui:options:
+            rows: 5
     - title: Choose a location
       required:
         - repoUrl
