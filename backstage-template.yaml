@@ -30,7 +30,7 @@ spec:
           ui:field: OwnerPicker
           ui:options:
             catalogFilter:
-              - kind: Group
+              kind: Group
     - title: Choose a location
       required:
         - repoUrl
