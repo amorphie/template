@@ -33,7 +33,7 @@ spec:
         projectName:
           title: projectName
           type: string
-          description: write azure host/server name
+          description: write tfs project name
           ui:autofocus: true
           ui:options:
             rows: 5
@@ -53,8 +53,7 @@ spec:
           type: string
           ui:field: RepoUrlPicker
           ui:options:
-            allowedHosts:
-              - ${{ parameters.tfsHost }}
+            allowedHosts: ${{ parameters.tfsHost }}
             allowedOrganizations: 
               - DefaultCollection
             allowedProjects: ${{ parameters.projectName }}
