@@ -79,6 +79,7 @@ spec:
         description: This is ${{ parameters.name }}
         repoUrl: ${{ parameters.repoUrl }}
         token: ${{ parameters.token }}
+        defaultBranch: main
   # some outputs which are saved along with the job for use in the frontend
   output:
     links:
