@@ -54,6 +54,7 @@ spec:
           ui:field: RepoUrlPicker
           ui:options:
             allowedHosts: ${{ parameters.tfsHost }}
+            allowedOwners: ${{ parameters.owner }}
             allowedOrganizations: 
               - DefaultCollection
             allowedProjects: ${{ parameters.projectName }}
