@@ -60,7 +60,10 @@ spec:
       name: Fetch Base
       action: fetch:template
       input:
-        url: /
+        url: ./
+        copyWithoutRender:
+          - .deepsource.toml
+          - .github
         values:
           name: ${{ parameters.name }}
           owner: ${{ parameters.owner }}
