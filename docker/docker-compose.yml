@@ -114,9 +114,34 @@ services:
     ports:
       - 5601:5601
 
+  apm-server:
+    container_name: bbt-template-apm-server
+    image: docker.elastic.co/apm/apm-server:8.8.1
+    depends_on:
+      - elastic
+      - kibana
+    cap_add: ["CHOWN", "DAC_OVERRIDE", "SETGID", "SETUID"]
+    cap_drop: ["ALL"]
+    ports:
+    - 8210:8200
+    networks:
+      - bbt-development
+    command: >
+       apm-server -e
+         -E apm-server.rum.enabled=true
+         -E setup.kibana.host=kibana:5601
+         -E setup.template.settings.index.number_of_replicas=0
+         -E apm-server.kibana.enabled=true
+         -E apm-server.kibana.host=bbt-template-kibana:5601
+         -E output.elasticsearch.hosts=["bbt-template-elastic:9200"]
+    healthcheck:
+      interval: 10s
+      retries: 12
+      test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:8200/
+
   vault:
     container_name: bbt-template-vault
-    image: vault:latest
+    image: vault:1.13.3
     restart: on-failure:10
     ports:
       - "8200:8200"
@@ -126,7 +151,7 @@ services:
       VAULT_DEV_ROOT_TOKEN_ID: 'admin'
       VAULT_TOKEN: 'admin'
     volumes:
-      - ./file:/vault/file
+      - vault:/vault/file
     cap_add:
       - IPC_LOCK
     healthcheck:
@@ -175,14 +200,6 @@ services:
     depends_on:
       - prometheus
 
-  placement:
-      image: daprio/dapr:latest
-      command: ["./placement", "-port", "50006", "log-level", "debug", "--log-as-json"]
-      ports:
-      - "50006:50006"
-      networks:
-      - bbt-development
-
 networks:
   bbt-development:
     external: true
@@ -195,4 +212,5 @@ volumes:
   dapr:
   grafana-data:
   prometheus:
+  vault:
 

@@ -90,9 +90,17 @@ public sealed class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDb
         [FromServices] IMapper mapper,
         [AsParameters] StudentSearch userSearch,
         HttpContext httpContext,
-        CancellationToken token
+        CancellationToken token,
+        ILogger<StudentModule> logger
     )
     {
+    logger.LogTrace("Trace Log Message");
+    logger.LogDebug("Debug Log Message");
+    logger.LogInformation("Information Log Message");
+   logger.LogWarning("Warning Log Message");
+    logger.LogError("Error Log Message");
+    logger.LogCritical("Critical Log Message");
+
         IQueryable<Student> query = await context
              .Set<Student>()
              .AsNoTracking()
@@ -103,11 +111,10 @@ public sealed class StudentModule : BaseBBTRoute<StudentDTO, Student, TemplateDb
              )
              .Sort<Student>("FirstMidName", SortDirectionEnum.Asc);
 
-
         IList<Student> resultList = await query
-.Skip(userSearch.Page)
-.Take(userSearch.PageSize)
-.ToListAsync(token);
+                    .Skip(userSearch.Page)
+                    .Take(userSearch.PageSize)
+                    .ToListAsync(token);
 
         return (resultList != null && resultList.Count > 0)
             ? Results.Ok(mapper.Map<IList<StudentDTO>>(resultList))

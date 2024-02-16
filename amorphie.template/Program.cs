@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
 using amorphie.core.Extension;
 using amorphie.core.HealthCheck;
@@ -10,6 +11,7 @@ using amorphie.template.Swagger;
 using amorphie.template.Validator;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using Elastic.Apm.NetCoreAll;
 using FluentValidation;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -50,7 +52,7 @@ builder.Services.AddApiVersioning(options =>
 );
 builder.Services.AddSingleton<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerGenOptions>();
 
-
+builder.AddSeriLog(Assembly.GetExecutingAssembly().GetName().Name,$"amorphie-{Assembly.GetExecutingAssembly().GetName().Name}-{DateTime.UtcNow:yyyy-MM}");
 // ---------------------------------------------
 
 // If you use AutoInclude in context you should add  ReferenceHandler.IgnoreCycles to avoid circular load
@@ -61,7 +63,7 @@ builder.Services.Configure<JsonOptions>(options =>
 });
 
 builder.Services.AddDaprClient();
-builder.Services.AddHealthChecks().AddBBTHealthCheck();
+ builder.Services.AddHealthChecks().AddBBTHealthCheck();
 
 builder.Services.AddScoped<IBBTIdentity, FakeIdentity>();
 
@@ -134,5 +136,49 @@ app.MapHealthChecks("/healthz", new HealthCheckOptions
 });
 app.MapMetrics();
 
+app.UseMiddleware<LoggingHandlerMiddleware>();
+
+
+app.UseAllElasticApm(app.Configuration);
+
+
 app.Run();
 
+/// <summary>
+/// Abstract handler for all exceptions.
+/// </summary>
+public class LoggingHandlerMiddleware
+{
+
+    private readonly RequestDelegate _next;
+private readonly ILogger _logger;
+
+    public LoggingHandlerMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
+    {
+        _next = next;
+
+           _logger = loggerFactory.CreateLogger<LoggingHandlerMiddleware>();
+    }
+
+    public async Task Invoke(HttpContext context)
+    {
+        try
+        {
+             _logger.LogInformation($"Information");
+
+            await _next(context);
+        }
+        catch (Exception exception)
+        {
+            // log the error
+            _logger.LogError(exception, "Error during executing {Context}", context.Request.Path.Value);
+            // var response = context.Response;
+            // response.ContentType = "application/json";
+            
+            // get the response code and message
+            // var (status, message) = GetResponse(exception);
+            // response.StatusCode = (int) status;
+            // await response.WriteAsync(exception.InnerException.ToString());
+        }
+    }
+}
